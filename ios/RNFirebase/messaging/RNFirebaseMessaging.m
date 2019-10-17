@@ -83,22 +83,28 @@ RCT_EXPORT_MODULE()
 
 // Listen for FCM tokens
 - (void)messaging:(FIRMessaging *)messaging didReceiveRegistrationToken:(NSString *)fcmToken {
-    DLog(@"Received new FCM token: %@", fcmToken);
-    [self sendJSEvent:self name:MESSAGING_TOKEN_REFRESHED body:fcmToken];
+    // start mod
+    // DLog(@"Received new FCM token: %@", fcmToken);
+    // [self sendJSEvent:self name:MESSAGING_TOKEN_REFRESHED body:fcmToken];
+    // end mod
 }
 
 // Listen for data messages in the foreground
 - (void)applicationReceivedRemoteMessage:(nonnull FIRMessagingRemoteMessage *)remoteMessage {
-    NSDictionary *message = [self parseFIRMessagingRemoteMessage:remoteMessage];
-    [self sendJSEvent:self name:MESSAGING_MESSAGE_RECEIVED body:message];
+    // start mod
+    // NSDictionary *message = [self parseFIRMessagingRemoteMessage:remoteMessage];
+    // [self sendJSEvent:self name:MESSAGING_MESSAGE_RECEIVED body:message];
+    // end mod
 }
 
 // Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
 // To enable direct data messages, you can set [Messaging messaging].shouldEstablishDirectChannel to YES.
 - (void)messaging:(nonnull FIRMessaging *)messaging
 didReceiveMessage:(nonnull FIRMessagingRemoteMessage *)remoteMessage {
-    NSDictionary *message = [self parseFIRMessagingRemoteMessage:remoteMessage];
-    [self sendJSEvent:self name:MESSAGING_MESSAGE_RECEIVED body:message];
+    // start mod
+    // NSDictionary *message = [self parseFIRMessagingRemoteMessage:remoteMessage];
+    // [self sendJSEvent:self name:MESSAGING_MESSAGE_RECEIVED body:message];
+    // end mod
 }
 
 // *******************************************************
@@ -107,49 +113,58 @@ didReceiveMessage:(nonnull FIRMessagingRemoteMessage *)remoteMessage {
 
 // ** Start React Module methods **
 RCT_EXPORT_METHOD(getToken:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-  if (initialToken) {
-    resolve(initialToken);
-    initialToken = nil;
-  } else if ([[FIRMessaging messaging] FCMToken]) {
-    resolve([[FIRMessaging messaging] FCMToken]);
-  } else {
-    NSString * senderId = [[FIRApp defaultApp] options].GCMSenderID;
-    [[FIRMessaging messaging] retrieveFCMTokenForSenderID:senderId completion:^(NSString * _Nullable FCMToken, NSError * _Nullable error) {
-        if (error) {
-            reject(@"messaging/fcm-token-error", @"Failed to retrieve FCM token.", error);
-        } else if (FCMToken) {
-            resolve(FCMToken);
-        } else {
-            resolve([NSNull null]);
-        }
-    }];
-  }
+//   mod start
+     resolve(@"FAKE");
+//   mod end
+//   if (initialToken) {
+//     resolve(initialToken);
+//     initialToken = nil;
+//   } else if ([[FIRMessaging messaging] FCMToken]) {
+//     resolve([[FIRMessaging messaging] FCMToken]);
+//   } else {
+//     NSString * senderId = [[FIRApp defaultApp] options].GCMSenderID;
+//     [[FIRMessaging messaging] retrieveFCMTokenForSenderID:senderId completion:^(NSString * _Nullable FCMToken, NSError * _Nullable error) {
+//         if (error) {
+//             reject(@"messaging/fcm-token-error", @"Failed to retrieve FCM token.", error);
+//         } else if (FCMToken) {
+//             resolve(FCMToken);
+//         } else {
+//             resolve([NSNull null]);
+//         }
+//     }];
+//   }
 }
 
 RCT_EXPORT_METHOD(deleteToken:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-  NSString * senderId = [[FIRApp defaultApp] options].GCMSenderID;
-  [[FIRMessaging messaging] deleteFCMTokenForSenderID:senderId completion:^(NSError * _Nullable error) {
-    if (error) {
-      reject(@"messaging/fcm-token-error", @"Failed to delete FCM token.", error);
-    } else {
-      resolve([NSNull null]);
-    }
-  }];
+// mod start
+     resolve([NSNull null]);
+//   NSString * senderId = [[FIRApp defaultApp] options].GCMSenderID;
+//   [[FIRMessaging messaging] deleteFCMTokenForSenderID:senderId completion:^(NSError * _Nullable error) {
+//     if (error) {
+//       reject(@"messaging/fcm-token-error", @"Failed to delete FCM token.", error);
+//     } else {
+//       resolve([NSNull null]);
+//     }
+//   }];
+// mod end
 }
 
 
 RCT_EXPORT_METHOD(getAPNSToken:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-    NSData *apnsToken = [FIRMessaging messaging].APNSToken;
-    if (apnsToken) {
-        const char *data = [apnsToken bytes];
-        NSMutableString *token = [NSMutableString string];
-        for (NSInteger i = 0; i < apnsToken.length; i++) {
-            [token appendFormat:@"%02.2hhX", data[i]];
-        }
-        resolve([token copy]);
-    } else {
-        resolve([NSNull null]);
-    }
+    // mod start
+    resolve([NSNull null]);
+    // NSData *apnsToken = [FIRMessaging messaging].APNSToken;
+    // if (apnsToken) {
+    //     const char *data = [apnsToken bytes];
+    //     NSMutableString *token = [NSMutableString string];
+    //     for (NSInteger i = 0; i < apnsToken.length; i++) {
+    //         [token appendFormat:@"%02.2hhX", data[i]];
+    //     }
+    //     resolve([token copy]);
+    // } else {
+    //     resolve([NSNull null]);
+    // }
+    // mod end
 }
 
 RCT_EXPORT_METHOD(requestPermission:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
@@ -187,7 +202,9 @@ RCT_EXPORT_METHOD(requestPermission:(RCTPromiseResolveBlock)resolve rejecter:(RC
 }
 
 RCT_EXPORT_METHOD(registerForRemoteNotifications:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-    [RCTSharedApplication() registerForRemoteNotifications];
+    // mod start
+    // [RCTSharedApplication() registerForRemoteNotifications];
+    // mod end
     resolve(nil);
 }
 

@@ -8,53 +8,65 @@
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(delete:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-    [[FIRInstanceID instanceID] deleteIDWithHandler:^(NSError * _Nullable error) {
-        if (error) {
-            reject(@"instance_id_error", @"Failed to delete instance id", error);
-        } else {
-            resolve(nil);
-        }
-    }];
+    // mod stat
+    resolve(nil);
+    // [[FIRInstanceID instanceID] deleteIDWithHandler:^(NSError * _Nullable error) {
+    //     if (error) {
+    //         reject(@"instance_id_error", @"Failed to delete instance id", error);
+    //     } else {
+    //         resolve(nil);
+    //     }
+    // }];
+    // mod end
 }
 
 RCT_EXPORT_METHOD(get:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-    [[FIRInstanceID instanceID] getIDWithHandler:^(NSString * _Nullable identity, NSError * _Nullable error) {
-        if (error) {
-            reject(@"instance_id_error", @"Failed to get instance id", error);
-        } else {
-            resolve(identity);
-        }
-    }];
+    // start mode
+    resolve(@"FAKE");
+    // [[FIRInstanceID instanceID] getIDWithHandler:^(NSString * _Nullable identity, NSError * _Nullable error) {
+    //     if (error) {
+    //         reject(@"instance_id_error", @"Failed to get instance id", error);
+    //     } else {
+    //         resolve(identity);
+    //     }
+    // }];
+    // end mod
 }
 
 RCT_EXPORT_METHOD(getToken:(NSString *)authorizedEntity
                   scope:(NSString *)scope
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    NSDictionary * options = nil;
-//    if ([FIRMessaging messaging].APNSToken) {
-//        options = @{@"apns_token": [FIRMessaging messaging].APNSToken};
-//    }
-    [[FIRInstanceID instanceID] tokenWithAuthorizedEntity:authorizedEntity scope:scope options:options handler:^(NSString * _Nullable identity, NSError * _Nullable error) {
-        if (error) {
-            reject(@"instance_id_error", @"Failed to getToken", error);
-        } else {
-            resolve(identity);
-        }
-    }];
+    //   mod start
+    resolve(@"FAKE");
+    // NSDictionary * options = nil;
+    //  if ([FIRMessaging messaging].APNSToken) {
+    //     options = @{@"apns_token": [FIRMessaging messaging].APNSToken};
+    //  }
+    // [[FIRInstanceID instanceID] tokenWithAuthorizedEntity:authorizedEntity scope:scope options:options handler:^(NSString * _Nullable identity, NSError * _Nullable error) {
+    //     if (error) {
+    //         reject(@"instance_id_error", @"Failed to getToken", error);
+    //     } else {
+    //         resolve(identity);
+    //     }
+    // }];
+    // mod end
 }
 
 RCT_EXPORT_METHOD(deleteToken:(NSString *)authorizedEntity
                   scope:(NSString *)scope
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
-    [[FIRInstanceID instanceID] deleteTokenWithAuthorizedEntity:authorizedEntity scope:scope handler:^(NSError * _Nullable error) {
-        if (error) {
-            reject(@"instance_id_error", @"Failed to deleteToken", error);
-        } else {
-            resolve(nil);
-        }
-    }];
+    // start mod
+    resolve(nil);
+    // [[FIRInstanceID instanceID] deleteTokenWithAuthorizedEntity:authorizedEntity scope:scope handler:^(NSError * _Nullable error) {
+    //     if (error) {
+    //         reject(@"instance_id_error", @"Failed to deleteToken", error);
+    //     } else {
+    //         resolve(nil);
+    //     }
+    // }];
+    // end mod
 }
 
 @end

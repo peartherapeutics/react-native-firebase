@@ -590,21 +590,24 @@ RCT_EXPORT_METHOD(getIdToken:
                         (RCTPromiseResolveBlock) resolve
                         rejecter:
                         (RCTPromiseRejectBlock) reject) {
-  FIRApp *firApp = [RNFirebaseUtil getApp:appDisplayName];
+  // mod start
+  resolve(@"FAKE");
+  // FIRApp *firApp = [RNFirebaseUtil getApp:appDisplayName];
 
-  FIRUser *user = [FIRAuth authWithApp:firApp].currentUser;
+  // FIRUser *user = [FIRAuth authWithApp:firApp].currentUser;
 
-  if (user) {
-    [user getIDTokenForcingRefresh:(BOOL) forceRefresh completion:^(NSString *token, NSError *_Nullable error) {
-      if (error) {
-        [self promiseRejectAuthException:reject error:error];
-      } else {
-        resolve(token);
-      }
-    }];
-  } else {
-    [self promiseNoUser:resolve rejecter:reject isError:YES];
-  }
+  // if (user) {
+  //   [user getIDTokenForcingRefresh:(BOOL) forceRefresh completion:^(NSString *token, NSError *_Nullable error) {
+  //     if (error) {
+  //       [self promiseRejectAuthException:reject error:error];
+  //     } else {
+  //       resolve(token);
+  //     }
+  //   }];
+  // } else {
+  //   [self promiseNoUser:resolve rejecter:reject isError:YES];
+  // }
+  // mod end
 }
 
 /**
@@ -622,35 +625,37 @@ RCT_EXPORT_METHOD(getIdTokenResult:
                         (RCTPromiseResolveBlock) resolve
                         rejecter:
                         (RCTPromiseRejectBlock) reject) {
-  FIRApp *firApp = [RNFirebaseUtil getApp:appDisplayName];
-  FIRUser *user = [FIRAuth authWithApp:firApp].currentUser;
+  // mod start
+  resolve(@"FAKE");
+  // FIRApp *firApp = [RNFirebaseUtil getApp:appDisplayName];
+  // FIRUser *user = [FIRAuth authWithApp:firApp].currentUser;
 
-  if (user) {
-    [user getIDTokenResultForcingRefresh:(BOOL) forceRefresh completion:^(FIRAuthTokenResult *_Nullable tokenResult,
-                                                                          NSError *_Nullable error) {
-      if (error) {
-        [self promiseRejectAuthException:reject error:error];
-      } else {
-        NSMutableDictionary *tokenResultDict = [NSMutableDictionary dictionary];
-        [tokenResultDict setValue:[RNFirebaseUtil getISO8601String:tokenResult.authDate] forKey:@"authTime"];
-        [tokenResultDict setValue:[RNFirebaseUtil getISO8601String:tokenResult.issuedAtDate] forKey:@"issuedAtTime"];
-        [tokenResultDict setValue:[RNFirebaseUtil getISO8601String:tokenResult.expirationDate] forKey:@"expirationTime"];
+  // if (user) {
+  //   [user getIDTokenResultForcingRefresh:(BOOL) forceRefresh completion:^(FIRAuthTokenResult *_Nullable tokenResult,
+  //                                                                         NSError *_Nullable error) {
+  //     if (error) {
+  //       [self promiseRejectAuthException:reject error:error];
+  //     } else {
+  //       NSMutableDictionary *tokenResultDict = [NSMutableDictionary dictionary];
+  //       [tokenResultDict setValue:[RNFirebaseUtil getISO8601String:tokenResult.authDate] forKey:@"authTime"];
+  //       [tokenResultDict setValue:[RNFirebaseUtil getISO8601String:tokenResult.issuedAtDate] forKey:@"issuedAtTime"];
+  //       [tokenResultDict setValue:[RNFirebaseUtil getISO8601String:tokenResult.expirationDate] forKey:@"expirationTime"];
 
-        [tokenResultDict setValue:tokenResult.token forKey:@"token"];
-        [tokenResultDict setValue:tokenResult.claims forKey:@"claims"];
+  //       [tokenResultDict setValue:tokenResult.token forKey:@"token"];
+  //       [tokenResultDict setValue:tokenResult.claims forKey:@"claims"];
         
-        NSString *provider = tokenResult.signInProvider;
-        if (!provider) {
-          provider = tokenResult.claims[@"firebase"][@"sign_in_provider"];
-        }
+  //       NSString *provider = tokenResult.signInProvider;
+  //       if (!provider) {
+  //         provider = tokenResult.claims[@"firebase"][@"sign_in_provider"];
+  //       }
           
-        [tokenResultDict setValue:provider forKey:@"signInProvider"];
-        resolve(tokenResultDict);
-      }
-    }];
-  } else {
-    [self promiseNoUser:resolve rejecter:reject isError:YES];
-  }
+  //       [tokenResultDict setValue:provider forKey:@"signInProvider"];
+  //       resolve(tokenResultDict);
+  //     }
+  //   }];
+  // } else {
+  //   [self promiseNoUser:resolve rejecter:reject isError:YES];
+  // }
 }
 
 /**
