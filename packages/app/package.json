@@ -55,7 +55,7 @@
   "dependencies": {
     "@react-native-firebase/app-types": "6.0.1",
     "opencollective-postinstall": "^2.0.1",
-    "superstruct": "^0.6.2"
+    "superstruct": "^0.8.0"
   },
   "collective": {
     "type": "opencollective",
