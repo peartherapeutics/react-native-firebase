@@ -2,7 +2,7 @@
   "name": "react-native-firebase",
   "private": true,
   "scripts": {
-    "prepare": "yarn run lerna:link && lerna run prepare",
+    "prepare": "npm run snyk-protect && yarn run lerna:link && lerna run prepare",
     "build:all:clean": "lerna run build:clean",
     "build:all:build": "lerna run build",
     "validate:all:js": "eslint ./",
@@ -31,7 +31,8 @@
     "npm:version:release:patch": "echo '!!🔴!! RELEASE !!🔴!!' && lerna version patch --no-git-tag-version --no-push --exact --force-publish=*",
     "npm:version:release:minor": "echo '!!🔴!! RELEASE !!🔴!!' && lerna version minor --no-git-tag-version --no-push --exact --force-publish=*",
     "npm:version:release:major": "echo '!!🔴!! RELEASE !!🔴!!' && lerna version major --no-git-tag-version --no-push --exact --force-publish=*",
-    "npm:publish:release": "echo '!!🔴!! RELEASE !!🔴!!' && echo '!!!!! RELEASE !!!!!!' && lerna publish from-package --dist-tag latest --no-git-reset"
+    "npm:publish:release": "echo '!!🔴!! RELEASE !!🔴!!' && echo '!!!!! RELEASE !!!!!!' && lerna publish from-package --dist-tag latest --no-git-reset",
+    "snyk-protect": "snyk protect"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -77,7 +78,8 @@
       "tests"
     ],
     "nohoist": [
-      "packages/template/project/react-native", "packages/template/project/react-native/**",
+      "packages/template/project/react-native",
+      "packages/template/project/react-native/**",
       "detox",
       "**/detox",
       "**/detox/**",
@@ -106,6 +108,8 @@
   "dependencies": {
     "axios": "^0.19.0",
     "inquirer": "^6.2.2",
-    "shelljs": "^0.8.3"
-  }
+    "shelljs": "^0.8.3",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
