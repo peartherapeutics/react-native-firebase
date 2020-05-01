@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build:clean": "rimraf dist && rimraf android/build && rimraf android/app/build && rimraf android/.gradle && rimraf ios/build",
-    "prepare": "patch-package"
+    "prepare": "npm run snyk-protect && patch-package",
+    "snyk-protect": "snyk protect"
   },
   "dependencies": {
     "@react-native-firebase/admob": "6.0.1",
@@ -28,7 +29,8 @@
     "@react-native-firebase/remote-config": "6.0.1",
     "@react-native-firebase/storage": "6.0.1",
     "react": "16.8.6",
-    "react-native": "0.60.5"
+    "react-native": "0.60.5",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@react-native-firebase/private-tests-helpers": "^0.0.13",
@@ -108,5 +110,6 @@
         "name": "TestingAVD"
       }
     }
-  }
+  },
+  "snyk": true
 }
